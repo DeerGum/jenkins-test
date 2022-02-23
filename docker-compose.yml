@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: test_db
+    image: mysql
+    restart: always
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Seoul
+    volumes:
+      - ./db_volumes/conf.d:/etc/mysql/conf.d
+      - ./db_volumes/data:/var/lib/mysql
+      - ./db_volumes/initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - '3308:3306'
+
+  jenkins:
+    container_name: jenkins
+    image:
+    build:
+      context: jenkins-dockerfile
+      dockerfile: Dockerfile
+    user: root
+    ports:
+      - 8001:8080
+      - 8888:50000
+    volumes:
+      - ./jenkins_volumes/jenkins:/var/jenkins_home
+      - ./jenkins_volumes/.ssh:/root/.ssh
