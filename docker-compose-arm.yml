@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     container_name: test_db
-    image: mysql
+    image: blabla1337/mysql
     restart: always
     env_file:
       - .env
@@ -18,7 +18,7 @@ services:
 
   jenkins:
     container_name: test_jenkins
-    image: jenkins/jenkins:lts
+    image: mlucken/jenkins-arm
     ports:
       - 8001:8080
       - 8888:50000
