@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 
 db_volumes/data/
+jenkins_volumes/
 
 ### STS ###
 .apt_generated

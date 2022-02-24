@@ -17,15 +17,14 @@ services:
       - '3308:3306'
 
   jenkins:
-    container_name: jenkins
-    image:
-    build:
-      context: jenkins-dockerfile
-      dockerfile: Dockerfile
+    container_name: test_jenkins
+    image: mlucken/jenkins-arm
     user: root
     ports:
       - 8001:8080
       - 8888:50000
     volumes:
       - ./jenkins_volumes/jenkins:/var/jenkins_home
-      - ./jenkins_volumes/.ssh:/root/.ssh
+      - ./jenkins_volumes/docker.sock:/var/run/docker.sock
+    environment:
+      TZ: Asia/Seoul
