@@ -1,5 +1,11 @@
-FROM java:8
-EXPOSE 8081
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+FROM openjdk:11-jre
+
+ENV APP_HOME=/usr/app/
+
+WORKDIR $APP_HOME
+
+COPY build/libs/*.jar application.jar
+
+EXPOSE 8000
+
+CMD ["java", "-jar", "application.jar"]

@@ -15,15 +15,23 @@ services:
       - ./db_volumes/initdb.d:/docker-entrypoint-initdb.d
     ports:
       - '3308:3306'
+    networks:
+      - test_network
 
-  jenkins:
-    container_name: test_jenkins
-    image: mlucken/jenkins-arm
+  application:
+    build: .
+    restart: always
     ports:
-      - 8001:8080
-      - 8888:50000
-    volumes:
-      - ./jenkins_volumes/jenkins:/var/jenkins_home
-      - ./jenkins_volumes/docker.sock:/var/run/docker.sock
+      - '8000:8000'
+    depends_on:
+      - db
+    container_name: test_app
     environment:
-      TZ: Asia/Seoul
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3308/test_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    networks:
+      - test_network
+
+networks:
+  test_network:
