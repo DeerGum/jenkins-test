@@ -1,4 +1,4 @@
-FROM openjdk:11-jre
+FROM openjdk:11-ea-28-jre-slim
 
 ENV APP_HOME=/usr/app/
 
