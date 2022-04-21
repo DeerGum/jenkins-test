@@ -5,11 +5,9 @@ FROM jenkins/jenkins:lts
 USER root
 
 #젠킨스 컨테이너에서 docker 명령어 사용을 위해 docker 설치
-COPY docker_install.sh /docker_install.sh
+RUN curl -fsSL https://get.docker.com -o get-docker.sh
 
-RUN chmod +x /docker_install.sh
-
-RUN /docker_install.sh
+RUN sh get-docker.sh
 
 RUN usermod -aG docker jenkins
 
