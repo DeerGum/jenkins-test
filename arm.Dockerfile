@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM dordoka/rpi-java8
 
 ENV APP_HOME=/usr/app/
 

@@ -18,18 +18,36 @@ services:
     networks:
       - test_network
 
-  application:
-    build: .
-    restart: always
+#  application:
+#    build:
+#      context: .
+#      dockerfile: arm.Dockerfile
+#    restart: always
+#    ports:
+#      - '8000:8000'
+#    depends_on:
+#      - db
+#    container_name: test_app
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/test_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+#      SPRING_DATASOURCE_USERNAME: root
+#      SPRING_DATASOURCE_PASSWORD: root
+#    networks:
+#      - test_network
+
+  jenkins:
+    container_name: test_jenkins
+    build:
+      context: ./jenkins_volumes
+      dockerfile: arm.Dockerfile
     ports:
-      - '8000:8000'
-    depends_on:
-      - db
-    container_name: test_app
+      - 8001:8080
+      - 8888:50000
+    volumes:
+      - ./jenkins_volumes/jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3308/test_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      TZ: Asia/Seoul
     networks:
       - test_network
 
